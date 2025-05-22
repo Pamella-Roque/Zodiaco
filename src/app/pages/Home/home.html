@@ -31,7 +31,8 @@
                 <li>✔️ Interface simples e leve</li>
             </ul>
             <p class="plan-highlight">✨ Perfeito para consultas rápidas e insights diários essenciais.</p>
-            <button routerLink="/CreateAccount" class="cta-button">Começar Agora</button>
+            <button [routerLink]="['/login']" class="cta-button">Começar Agora</button>
+
         </div>
 
         <div class="plan-card premium">
@@ -45,7 +46,8 @@
                 <li>🔁 Numerologia</li>
             </ul>
             <p class="plan-highlight">🪐 Ideal para quem busca um contato mais completo com os sinais do universo.</p>
-            <button routerLink="/CreateAccount" class="cta-button premium">Começar Agora</button>
+            <button [routerLink]="['/CreateAccount']" class="cta-button">Começar Agora</button>
+
         </div>
     </div>
     </section>

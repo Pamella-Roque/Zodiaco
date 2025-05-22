@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "https://apizodiaco.onrender.com",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

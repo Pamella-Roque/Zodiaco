@@ -135,3 +135,56 @@ section {
 
 .cta-button.premium:hover {
     background-color: #f1a90f; }
+
+.minibtn{
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  color:white;
+  border-radius: 8px;
+  width: 100px;
+  height: 30px;
+  border:none;
+  background-color: #f1a90f;
+  cursor: pointer;
+}
+
+/* Blocos login e cadastro */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 5rem;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+}
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 0 auto;
+  max-width: 400px;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.35rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
