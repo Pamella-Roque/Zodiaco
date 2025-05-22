@@ -1,0 +1,52 @@
+<div class="login-container">
+    <div class="login-card">
+        <h2>Cadastro</h2>
+        <form (ngSubmit)="cadastrar()" class="login-form"  >
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input type="text" id="nickname" [(ngModel)]="nickname" placeholder="Insira seu apelido aqui">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="mail" id="email" [(ngModel)]="email" placeholder="Insira seu e-mail">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="text" id="senha" [(ngModel)]="senha"   placeholder="Digite seu n° de telefone">
+            </div>
+            <div class="form-group">
+                <label for="nascimento">Data de nascimento</label>
+                <input type="date" id="nascimento" name="nascimento" [(ngModel)]="dataNascimento" placeholder="Selecione sua data de nascimento"
+                    max="2007-12-31" required>
+            </div>
+
+            <div class="form-group">
+                <label for="plano">Escolha seu plano: </label>
+                <div class="radio-options">
+                    <label>
+                        <input type="radio" name="plano" value="planoBasico" [(ngModel)]="plano" (change)="gerarCodigoPix()">
+                        Básico R$20,00
+                    </label>
+                    <label>
+                        <input type="radio" name="plano" value="planoAvancado" [(ngModel)]="plano">
+                        Avançado R$30,00
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="plano === 'planoBasico' || plano === 'planoAvancado'">
+                <label for="CodigoPix">PIX</label>
+                <span>Copie o código pix abaixo para realizar o pagamento:{{codigoPix}} </span>
+                
+            </div>
+
+            
+
+            
+            <button type="submit" class="login-button">Cadastrar</button>
+        </form>
+        <span>Já tem uma conta?
+                <button [routerLink]="'/login'" class="minibtn">Faça login</button>
+            </span>
+    </div>
+    </div>
