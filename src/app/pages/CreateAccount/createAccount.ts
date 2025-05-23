@@ -19,25 +19,28 @@ export class CreateAccountComponent {
   dataNascimento = '';
   codigoPix: string = '';
 
-  apiUrl = 'https://apizodiaco.onrender.com';
+ 
 
   constructor(private http: HttpClient, private router: Router) {}
 
   gerarCodigoPix() {
-    this.http.get(`${this.apiUrl}/api/pagamento/gerar`).subscribe({
+    this.http.get('/api/pagamento/gerar').subscribe({
       next: (res: any) => {
         console.log('PIX gerado:', res);
-        // Verifica se vem como objeto com chave "codigo" ou direto como string
-        this.codigoPix = res.codigo || res || JSON.stringify(res);
+        if (res && typeof res === 'object' && 'codigoPix' in res) {
+          this.codigoPix = res.codigoPix;  // pega o codigo aleatorio gerado
+        } else if (typeof res === 'string') {
+          this.codigoPix = res;
+        } else {
+          this.codigoPix = JSON.stringify(res);
+        }
       },
       error: (err) => {
         console.error('Erro ao gerar código PIX', err);
         alert('Erro ao gerar código PIX!');
       }
     });
-  }
-  
-
+  }    
 
 
   cadastrar() {
@@ -55,7 +58,7 @@ export class CreateAccountComponent {
       email: this.email
     };
 
-    this.http.post(`${this.apiUrl}/api/usuario/cadastro`, dados).subscribe({
+    this.http.post(`/api/usuario/cadastro`, dados).subscribe({
       next: (res) => {
         alert('Cadastro realizado com sucesso!');
         console.log(res);
