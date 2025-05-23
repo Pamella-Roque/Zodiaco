@@ -1,7 +1,7 @@
 <div class="login-container">
     <div class="login-card">
         <h2>Login</h2>
-        <form (ngSubmit)="login()">
+        <form (ngSubmit)="fazerLogin()">
             <div class="form-group">
                 <label for="nickname">Nickname</label>
                 <input type="text" id="nickname" [(ngModel)]="nickname" name="nickname" placeholder="Insira seu nickname">
@@ -13,7 +13,7 @@
             </div>
         
             <span>Não tem uma conta?
-                <button [routerLink]="'/CreateAccount'" class="minibtn">Cadastre-se</button>
+               
             </span>
         
             <button type="submit" class="login-button">Entrar</button>

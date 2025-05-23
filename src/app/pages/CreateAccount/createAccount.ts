@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
 @Component({
   standalone: true,
   selector: 'app-create-account',
-  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './CreateAccount.html'
 })
 export class CreateAccountComponent {
@@ -48,7 +48,7 @@ export class CreateAccountComponent {
       alert('Por favor, preencha todos os campos!');
       return;
     }
-
+  
     const dados = {
       nickname: this.nickname,
       senha: this.senha,
@@ -57,16 +57,24 @@ export class CreateAccountComponent {
       dataNascimento: this.dataNascimento,
       email: this.email
     };
-
-    this.http.post(`/api/usuario/cadastro`, dados).subscribe({
+  
+    this.http.post<{ token: string }>('/api/usuario/cadastro', dados).subscribe({
       next: (res) => {
-        alert('Cadastro realizado com sucesso!');
-        console.log(res);
-        this.router.navigate(['/login']);
+        console.log('Resposta da API:', res);
+        
+        // Armazenar token no localStorage
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('nickname', this.nickname); // Salva nickname também
+          alert('Cadastro realizado com sucesso!');
+          this.router.navigate(['/login']); 
+        } else {
+          alert('Cadastro realizado, mas token não foi retornado.');
+        }
       },
       error: (err) => {
+        console.error('Erro ao cadastrar:', err);
         alert('Erro ao cadastrar!');
-        console.error(err);
       }
     });
   }

@@ -29,17 +29,17 @@
                 <label for="plano">Escolha seu plano: </label>
                 <div class="radio-options">
                     <label>
-                        <input type="radio" name="plano" value="planoBasico" [(ngModel)]="plano" (change)="gerarCodigoPix()">
+                        <input type="radio" name="plano" value="Basico" [(ngModel)]="plano" (change)="gerarCodigoPix()">
                         Básico R$20,00
                     </label>
                     <label>
-                        <input type="radio" name="plano" value="planoAvancado" [(ngModel)]="plano" (change)="gerarCodigoPix()">
+                        <input type="radio" name="plano" value="Avançado" [(ngModel)]="plano" (change)="gerarCodigoPix()">
                         Avançado R$30,00
                     </label>
                 </div>
             </div>
 
-            <div class="form-group" *ngIf="plano === 'planoBasico' || plano === 'planoAvancado'">
+            <div class="form-group" *ngIf="plano === 'Basico' || plano === 'Avançado'">
                 <label for="CodigoPix">PIX</label>
                 <span>Copie o código pix abaixo para realizar o pagamento:{{codigoPix}} </span>
                 

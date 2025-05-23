@@ -1,44 +1,43 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 @Component({
-  standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
-  templateUrl: './Login.html'
+  standalone: true,
+  templateUrl: './Login.html',
+  imports: [FormsModule]
 })
 export class LoginComponent {
-  nickname = '';
-  senha = '';
+  nickname: string = '';
+  senha: string = '';
+  erroMensagem: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login() {
-    if (!this.nickname || !this.senha) {
-      alert('Por favor, preencha todos os campos!');
-      return;
-    }
-  
+  fazerLogin() {
     const dadosLogin = {
       nickname: this.nickname,
       senha: this.senha
     };
   
-    console.log('Dados enviados:', dadosLogin);
-  
-    this.http.post(`/api/login`, dadosLogin).subscribe({
-      next: (res) => {
-        alert('Login realizado com sucesso!');
-        console.log(res);
-        this.router.navigate(['/showFeed']);
+    this.http.post('/api/login', dadosLogin).subscribe({
+      next: (res: any) => {
+        console.log('Resposta login:', res);
+        if (res && res.token) {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('nickname', res.nickname);
+          this.router.navigate(['/showFeed']);
+        } else {
+          this.erroMensagem = 'Email ou senha inválidaos';
+        }
       },
       error: (err) => {
-        alert('Erro ao fazer login!');
+        this.erroMensagem = 'Erro na autenticação. Tente novamente.';
         console.error(err);
       }
     });
   }
-}  
+}

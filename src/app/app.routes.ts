@@ -8,6 +8,9 @@ import { LoginComponent } from './pages/Login/login';
 
 import { FeedComponent } from './pages/Feed/showFeed';
 
+import { PerfilComponent } from './pages/Perfil/perfil';
+
+
 
 export const routes: Routes = [
 
@@ -18,5 +21,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
 
     { path: 'showFeed', component: FeedComponent },
+
+    { path: 'showperfil', component: PerfilComponent },
+
 
 ];

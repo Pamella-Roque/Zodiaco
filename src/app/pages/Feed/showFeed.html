@@ -1,9 +1,14 @@
 <div class="hero">
     <!-- <h1>Olá, {{ nickname }}</h1>
+     
     <h1>Plano: {{plano}} </h1> -->
-    <h1>Elemento: </h1>
-
-    <!-- <button routerLink="/atualizarConta" class="cta-button">Atualizar Cadastro</button>   -->
+    <h1>Olá {{nickname}},seja bem-vindo!</h1>
+    <h1>Seu plano é: {{plano}}</h1>
+    <h1>Signo é: {{signo}}</h1>
+    <h1>Elemento: {{elemento}}</h1>
+    <span>Deseja editar/excluir seu perfil ?
+        <button [routerLink]="'/showperfil'" class="minibtn">Editar/Excluir</button>
+    </span>
 
     <p class="hero-text">
         Realize suas consultas astrológicas aqui:
@@ -12,53 +17,24 @@
 
 <section class="about">
     <h2>Frase do dia:</h2>
-    <p> A númerologia da data de nascimento pode revelar diversas facetas sobre sua personalidade. Clique e descubra o
-        que os números tem a dizer sobre você!
-        <!-- <div>
-            <label for="CodigoPix">PIX</label>
-            <!-- <span>Copie o código pix abaixo para realizar o pagamento:{{codigoPix}} </span>
-         
-        </div> -->
-
-    </p>
+    <p>{{frase_do_dia}} </p>
 </section>
 
 <section class="about">
     <h2>Numero do bicho (Avancado):</h2>
-    <p></p>
+    <app-mensagem-plano-basico [mensagem]="planoBasico" (onUpgrade)="fazerUpgrade()"></app-mensagem-plano-basico>
+
+    <p><strong>Animal do dia:</strong> {{animal}} </p>
+    <p><strong>Numero do dia:</strong>{{numero}} </p>
+    
 </section>
 
 <section class="about">
-    <!-- <h2>Frase do dia para {{nickname }}</h2> -->
-    <p>
-        🌟 Você poderá fazer aquisição de bens materiais ou poderá ainda fazer novos investimentos. No entanto,
-        lembre-se de que deve ser prudente
-    </p>
+    <h2>Horóscopo do dia {{ resultado.data }}</h2>
+    <app-mensagem-plano-basico [mensagem]="planoBasico" (onUpgrade)="fazerUpgrade()"></app-mensagem-plano-basico>
+    <p><strong>Signo:</strong> {{ resultado.signo | titlecase }}</p>
+    <p><strong>Mensagem:</strong> {{ resultado.texto }}</p>
+      
+      
 </section>
 
-<!-- <section class="about">
-    <h2>Mensagem semanal</h2>
-    <ng-container *ngIf="isPremium; else upgradeMsg">
-      <p>
-        🌟 Esta é a sua mensagem semanal exclusiva!<br/> Os astros revelam caminhos especiais para você nos próximos dias...
-      </p>
-    </ng-container>
-    <ng-template #upgradeMsg>
-      <p>🌟 Torne-se premium para acessar a mensagem semanal exclusiva!</p>
-      <button routerLink="/upgrade" class="cta-button">Upgrade para Premium</button>
-    </ng-template>
-  </section> -->
-
-<!-- <section class="about">
-    <h2>Número do bicho do dia</h2>
-    <ng-container *ngIf="isPremium; else upgradeMsg">
-        <p>
-            🌟 Esta é a sua mensagem semanal exclusiva!<br /> Os astros revelam caminhos especiais para você nos
-            próximos dias...
-        </p>
-    </ng-container>
-    <ng-template #upgradeMsg>
-        <p>🌟 Torne-se premium para acessar o número do bicho e muito mais!</p>
-        <button routerLink="/upgrade" class="cta-button">Upgrade para Premium</button>
-    </ng-template>
-    </section> -->

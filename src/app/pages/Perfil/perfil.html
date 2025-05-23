@@ -1,0 +1,57 @@
+<div class="hero">
+    <h1>Olá, {{nome}}! Seja bem-vindo(a)!</h1>
+    <h2>Seu plano: {{plano}}</h2>
+    <h2>Data de nascimento: {{dataNascimento}}</h2>
+    <button type="button" class="btn-base btnDeslogar" (click)="deslogar()">Sair</button>
+</div>
+
+<section class="form-container">
+    <div class="card">
+        <h2>Editar Perfil</h2>
+        <div class="container">
+            <form (ngSubmit)="atualizarUsuario()">
+
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" [(ngModel)]="nome" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" [(ngModel)]="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="plano">Trocar de plano:</label>
+                    <select id="plano" [(ngModel)]="plano" name="plano" required>
+                        <option value="">Selecione um plano</option>
+                        <option value="Basico">Básico</option>
+                        <option value="Avançado">Avançado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento:</label>
+                    <input type="date" id="dataNascimento" [(ngModel)]="dataNascimento" name="dataNascimento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" [(ngModel)]="senha" name="senha" required>
+                </div>
+
+                <button type="submit" class="btn-base update-button">Editar/Excluir</button>
+                <button type="button" (click)="navegarParaFeed()" class="btn-base update-button">
+                    Ver Feed
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card delete">
+        <h2>Excluir Conta</h2>
+        <p>Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.</p>
+        <button type="button" class="btn-base deleteAccount" (click)="excluirConta()">Excluir</button>
+    </div>
+</section>
+  
