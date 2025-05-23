@@ -17,24 +17,35 @@
 
 <section class="about">
     <h2>Frase do dia:</h2>
-    <p>{{frase_do_dia}} </p>
+    <p>{{frase_do_dia}}</p>
 </section>
 
 <section class="about">
-    <h2>Numero do bicho (Avancado):</h2>
-    <app-mensagem-plano-basico [mensagem]="planoBasico" (onUpgrade)="fazerUpgrade()"></app-mensagem-plano-basico>
+    <h2>Numero do bicho (Avançado):</h2>
 
-    <p><strong>Animal do dia:</strong> {{animal}} </p>
-    <p><strong>Numero do dia:</strong>{{numero}} </p>
-    
+    <ng-container *ngIf="plano === 'Avançado'; else bloqueado">
+        <p><strong>Animal do dia:</strong> {{animal}}</p>
+        <p><strong>Numero do dia:</strong> {{numero}}</p>
+    </ng-container>
+
+    <ng-template #bloqueado>
+        <app-mensagem-plano-basico [mensagem]="'Essa funcionalidade está disponível apenas para o plano Avançado.'"
+            (onUpgrade)="fazerUpgrade()">
+        </app-mensagem-plano-basico>
+    </ng-template>
 </section>
 
 <section class="about">
     <h2>Horóscopo do dia {{ resultado.data }}</h2>
-    <app-mensagem-plano-basico [mensagem]="planoBasico" (onUpgrade)="fazerUpgrade()"></app-mensagem-plano-basico>
-    <p><strong>Signo:</strong> {{ resultado.signo | titlecase }}</p>
-    <p><strong>Mensagem:</strong> {{ resultado.texto }}</p>
-      
-      
-</section>
 
+    <ng-container *ngIf="plano === 'Avançado'; else bloqueadoHoroscopo">
+        <p><strong>Signo:</strong> {{ resultado.signo | titlecase }}</p>
+        <p><strong>Mensagem:</strong> {{ resultado.texto }}</p>
+    </ng-container>
+
+    <ng-template #bloqueadoHoroscopo>
+        <app-mensagem-plano-basico [mensagem]="'Essa funcionalidade está disponível apenas para o plano Avançado.'"
+            (onUpgrade)="fazerUpgrade()">
+        </app-mensagem-plano-basico>
+    </ng-template>
+</section>

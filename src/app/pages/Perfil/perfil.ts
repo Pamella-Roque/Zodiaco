@@ -1,37 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para ngModel
+import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-editar-perfil',
+  selector: 'app-perfil',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './perfil.html'
+  templateUrl: './perfil.html',
 })
 export class PerfilComponent implements OnInit {
   nome: string = '';
   email: string = '';
   plano: string = '';
   dataNascimento: string = '';
-  senha: string = '';
+  senha: string = ''; // Começa vazia, só para nova senha
   token: string = '';
+  nickname: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    // Buscar dados do usuário e token do localStorage (ou outro lugar)
     this.token = localStorage.getItem('token') || '';
-    this.nome = localStorage.getItem('nome') || '';
-    this.email = localStorage.getItem('email') || '';
-    this.plano = localStorage.getItem('plano') || '';
-    this.dataNascimento = localStorage.getItem('dataNascimento') || '';
-    // NÃO carregue a senha direto do storage, por segurança!
-  }
+    this.nickname = localStorage.getItem('nickname') || '';
 
-  atualizarUsuario() {
-    if (!this.token) {
+    if (!this.token || !this.nickname) {
       alert('Usuário não autenticado');
       this.router.navigate(['/login']);
       return;
@@ -39,28 +33,56 @@ export class PerfilComponent implements OnInit {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 
-    const body = {
+    this.http.get<any>(`/api/usuario/consultar/${this.nickname}`, { headers }).subscribe({
+      next: (res) => {
+        this.nome = res.nome;
+        this.email = res.email;
+        this.plano = res.plano;
+        this.dataNascimento = res.dataNascimento; 
+        
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao carregar os dados. Faça login novamente.');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+ 
+
+  atualizarUsuario() {
+    if (!this.token || !this.nickname) {
+      alert('Usuário não autenticado');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+
+    const body: any = {
       nome: this.nome,
       email: this.email,
       plano: this.plano,
       dataNascimento: this.dataNascimento,
-      senha: this.senha
     };
 
-    this.http.put('/api/usuario/atualizar', body, { headers }).subscribe({
-      next: (res) => {
+    
+    if (this.senha && this.senha.trim() !== '') {
+      body.senha = this.senha;
+    }
+
+    this.http.put(`/api/usuario/atualizar/${this.nickname}`, body, { headers }).subscribe({
+      next: () => {
         alert('Dados atualizados com sucesso!');
 
-        // Atualizar localStorage para manter os dados sincronizados
         localStorage.setItem('nome', this.nome);
         localStorage.setItem('email', this.email);
         localStorage.setItem('plano', this.plano);
         localStorage.setItem('dataNascimento', this.dataNascimento);
+        
+        
 
-        // Opcional: limpar senha do campo
-        this.senha = '';
-
-        // Navegar para o Feed com os dados atualizados
         this.router.navigate(['/showFeed']);
       },
       error: (err) => {
@@ -70,31 +92,16 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  deslogar() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  }
-  navegarParaFeed() {
-    this.router.navigate(['/showFeed'], {
-      queryParams: {
-        nome: this.nome,
-        email: this.email,
-        plano: this.plano,
-        dataNascimento: this.dataNascimento,
-        senha: this.senha
-      }
-    });
-  }
   excluirConta() {
-    if (!this.token) {
+    if (!this.token || !this.nickname) {
       alert('Usuário não autenticado');
       return;
     }
 
-    if (confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível!')) {
+    if (confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 
-      this.http.delete('/api/usuario/excluir', { headers }).subscribe({
+      this.http.delete(`/api/usuario/excluir/${this.nickname}`, { headers }).subscribe({
         next: () => {
           alert('Conta excluída com sucesso.');
           localStorage.clear();
@@ -106,5 +113,14 @@ export class PerfilComponent implements OnInit {
         }
       });
     }
+  }
+
+  deslogar() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
+  navegarParaFeed() {
+    this.router.navigate(['/showFeed']);
   }
 }

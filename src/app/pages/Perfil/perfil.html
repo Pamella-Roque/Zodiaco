@@ -1,7 +1,8 @@
 <div class="hero">
     <h1>Olá, {{nome}}! Seja bem-vindo(a)!</h1>
     <h2>Seu plano: {{plano}}</h2>
-    <h2>Data de nascimento: {{dataNascimento}}</h2>
+    <h2>Data de nascimento: {{ dataNascimento || 'Não informado' }}</h2>
+
     <button type="button" class="btn-base btnDeslogar" (click)="deslogar()">Sair</button>
 </div>
 
@@ -37,7 +38,7 @@
 
                 <div class="form-group">
                     <label for="senha">Senha:</label>
-                    <input type="password" id="senha" [(ngModel)]="senha" name="senha" required>
+                    <input type="password" id="senha" [(ngModel)]="senha" name="senha" >
                 </div>
 
                 <button type="submit" class="btn-base update-button">Editar/Excluir</button>
