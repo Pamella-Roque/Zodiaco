@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <label for="plano">Escolha seu plano: </label>
-                <div class="radio-options">
+                <div class="radio-options"><br />
                     <label>
                         <input type="radio" name="plano" value="Basico" [(ngModel)]="plano" (change)="gerarCodigoPix()">
                         Básico R$20,00
@@ -41,12 +41,9 @@
 
             <div class="form-group" *ngIf="plano === 'Basico' || plano === 'Avançado'">
                 <label for="CodigoPix">PIX</label>
-                <span>Copie o código pix abaixo para realizar o pagamento:{{codigoPix}} </span>
+                <span class="pix-text">{{codigoPix}} </span>
                 
             </div>
-
-            
-
             
             <button type="submit" class="login-button">Cadastrar</button>
         </form>

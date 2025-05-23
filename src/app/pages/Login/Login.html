@@ -13,11 +13,14 @@
             </div>
         
             <span>Não tem uma conta?
-               
+                <button [routerLink]="'/CreateAccount'" class="minibtn">Cadastre-se</button>
             </span>
         
             <button type="submit" class="login-button">Entrar</button>
         </form>
+        <div *ngIf="erroMensagem" style="color: red; margin-top: 10px;">
+            {{ erroMensagem }}
+        </div>
           
     </div>
 </div>

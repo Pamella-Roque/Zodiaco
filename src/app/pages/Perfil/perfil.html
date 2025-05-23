@@ -1,7 +1,7 @@
 <div class="hero">
-    <h1>Olá, {{nome}}! Seja bem-vindo(a)!</h1>
+    <h1>Olá, {{nome}}</h1>
     <h2>Seu plano: {{plano}}</h2>
-    <h2>Data de nascimento: {{ dataNascimento || 'Não informado' }}</h2>
+    <h2>Data de nascimento:{{nascimento}} </h2>
 
     <button type="button" class="btn-base btnDeslogar" (click)="deslogar()">Sair</button>
 </div>
@@ -21,6 +21,10 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" [(ngModel)]="email" name="email" required>
                 </div>
+                <div class="form-group">
+                    <label for="dataNascimento">data de nascimento</label>
+                    <input type="dataNascimento" id="dataNascimento" [(ngModel)]="nascimento" name="dataNascimento" required>
+                </div>
 
                 <div class="form-group">
                     <label for="plano">Trocar de plano:</label>
@@ -31,17 +35,14 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="dataNascimento">Data nascimento:</label>
-                    <input type="text" id="dataNascimento" [(ngModel)]="dataNascimento" name="dataNascimento" required><p>dataNasc digitado: {{ dataNascimento}}</p>
-                </div>
+               
 
                 <div class="form-group">
                     <label for="senha">Senha:</label>
                     <input type="password" id="senha" [(ngModel)]="senha" name="senha" >
                 </div>
 
-                <button type="submit" class="btn-base update-button">Editar/Excluir</button>
+                <button type="submit" class="btn-base update-button">Atualizar dados</button>
                 <button type="button" (click)="navegarParaFeed()" class="btn-base update-button">
                     Ver Feed
                 </button>

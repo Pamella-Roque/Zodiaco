@@ -161,6 +161,7 @@ section {
 .update-button {
   background-color: rgb(51, 206, 51);
   width: 200px;
+  margin-right: 1rem;
 }
 
 .update-button:hover {
@@ -219,4 +220,11 @@ section {
 
 .radio-options{
   max-width: fit-content;
+}
+.pix-text{
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  
 }

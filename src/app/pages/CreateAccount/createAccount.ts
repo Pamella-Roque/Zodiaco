@@ -66,6 +66,7 @@ export class CreateAccountComponent {
         if (res.token) {
           localStorage.setItem('token', res.token);
           localStorage.setItem('nickname', this.nickname); // Salva nickname também
+          localStorage.setItem('dataNascimento', this.dataNascimento);
           alert('Cadastro realizado com sucesso!');
           this.router.navigate(['/login']); 
         } else {
