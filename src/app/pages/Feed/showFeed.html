@@ -1,7 +1,4 @@
 <div class="hero">
-    <!-- <h1>Olá, {{ nickname }}</h1>
-     
-    <h1>Plano: {{plano}} </h1> -->
     <h1>Olá {{nickname}},seja bem-vindo!</h1>
     <h1>Seu plano é: {{plano}}</h1>
     <h1>Signo é: {{signo}}</h1>
@@ -23,29 +20,33 @@
 <section class="about">
     <h2>Numero do bicho (Avançado):</h2>
 
-    <ng-container *ngIf="plano === 'Avançado'; else bloqueado">
+    <ng-container *ngIf="plano === 'Avançado'; else planoBasicoMsgBicho">
         <p><strong>Animal do dia:</strong> {{animal}}</p>
         <p><strong>Numero do dia:</strong> {{numero}}</p>
     </ng-container>
 
-    <ng-template #bloqueado>
+    <ng-template #planoBasicoMsgBicho>
         <app-mensagem-plano-basico [mensagem]="'Essa funcionalidade está disponível apenas para o plano Avançado.'"
             (onUpgrade)="fazerUpgrade()">
         </app-mensagem-plano-basico>
     </ng-template>
 </section>
+  
 
 <section class="about">
     <h2>Horóscopo do dia {{ resultado.data }}</h2>
-
-    <ng-container *ngIf="plano === 'Avançado'; else bloqueadoHoroscopo">
+    <ng-container *ngIf="plano === 'Avançado'; else planoBasicoMsg">
         <p><strong>Signo:</strong> {{ resultado.signo | titlecase }}</p>
         <p><strong>Mensagem:</strong> {{ resultado.texto }}</p>
     </ng-container>
-
-    <ng-template #bloqueadoHoroscopo>
+    
+    <ng-template #planoBasicoMsg>
         <app-mensagem-plano-basico [mensagem]="'Essa funcionalidade está disponível apenas para o plano Avançado.'"
             (onUpgrade)="fazerUpgrade()">
         </app-mensagem-plano-basico>
-    </ng-template>
+        </ng-template>
+
+
+        
 </section>
+

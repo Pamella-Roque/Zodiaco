@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-feed',
-  imports: [CommonModule, RouterModule, MensagemPlanoBasicoComponent],
+  imports: [CommonModule, RouterModule,MensagemPlanoBasicoComponent],
   templateUrl: './showFeed.html'
 })
 export class FeedComponent implements OnInit {
@@ -20,7 +20,6 @@ export class FeedComponent implements OnInit {
   numero: string = '';
   token: string = '';
   planoBasico: string = '';
-  atualizado: boolean = false;
 
   resultado: { signo: string; data: string; texto: string } = { signo: '', data: '', texto: '' };
 
@@ -29,28 +28,20 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     const storedNickname = localStorage.getItem('nickname');
     const storedToken = localStorage.getItem('token');
-    const atualizadoFlag = localStorage.getItem('atualizado');
-
-    this.atualizado = atualizadoFlag === 'true';
 
     if (storedNickname && storedToken) {
       this.nickname = storedNickname;
       this.token = storedToken;
 
-      if (!this.atualizado) {
-        // Dados do cadastro (localStorage)
-        this.signo = localStorage.getItem('signo') || '';
-        this.elemento = localStorage.getItem('elemento') || '';
-        this.plano = localStorage.getItem('plano') || 'Básico';
-        console.log('Dados carregados do cadastro/localStorage');
-      } else {
-        // Dados atualizados da API
-        this.consultardadosUser();
-        console.log('Dados carregados da API');
-      }
+      // Sempre busque dados atualizados da API para evitar inconsistências
+      this.consultardadosUser();
 
+      // Buscar signo (caso queira atualizar separadamente)
       this.consultarSigno(this.nickname);
+
+      // Buscar frase do dia
       this.gerarFrasedoDia();
+
     } else {
       alert('Usuário não logado');
       this.router.navigate(['/login']);
@@ -67,11 +58,20 @@ export class FeedComponent implements OnInit {
         this.signo = res.signo;
         this.elemento = res.elemento;
 
+        // Atualiza localStorage para manter sincronizado
+        localStorage.setItem('plano', this.plano);
+        localStorage.setItem('signo', this.signo);
+        localStorage.setItem('elemento', this.elemento);
+
         if (this.plano === 'Avançado') {
           this.gerarNumBicho(this.nickname);
           this.gerarHoroscopo(this.nickname);
         } else {
           this.planoBasico = 'Funcionalidade disponível apenas para o plano Avançado';
+          // Limpa dados avançados
+          this.animal = '';
+          this.numero = '';
+          this.resultado = { signo: '', data: '', texto: '' };
         }
 
         console.log('Dados atualizados:', res);
@@ -99,6 +99,9 @@ export class FeedComponent implements OnInit {
       next: (res) => {
         this.signo = res.signo;
         this.elemento = res.elemento;
+        // Atualiza localStorage também
+        localStorage.setItem('signo', this.signo);
+        localStorage.setItem('elemento', this.elemento);
       },
       error: (err) => {
         console.error('Erro ao consultar signo', err);

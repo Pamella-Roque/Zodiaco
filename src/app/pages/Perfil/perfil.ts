@@ -15,7 +15,7 @@ export class PerfilComponent implements OnInit {
   email: string = '';
   plano: string = '';
   dataNascimento: string = '';
-  senha: string = ''; // Começa vazia, só para nova senha
+  senha: string = ''; 
   token: string = '';
   nickname: string = '';
 
