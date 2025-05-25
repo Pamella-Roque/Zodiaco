@@ -35,6 +35,7 @@ export class UsuarioService {
 
   limparUsuario() {
     localStorage.removeItem('usuario');
-    this.usuarioSubject.next(null);
+    localStorage.clear();
+
   }
 }

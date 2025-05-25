@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() {}
+  constructor(private usuarioService: UsuarioService) {}
 
   setToken(token: string) {
     localStorage.setItem('token', token);
@@ -24,8 +25,9 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('nickname');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('nickname');
+    this.usuarioService.limparUsuario();
   }
 
   isLoggedIn(): boolean {

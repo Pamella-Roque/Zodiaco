@@ -22,7 +22,10 @@ export class LoginComponent {
       nickname: this.nickname,
       senha: this.senha
     };
-  
+    if (!this.nickname || !this.senha ) {
+      alert('Por favor, preencha todos os campos!');
+      return;
+    }
     this.erroMensagem = ''; // limpa mensagem anterior
   
     this.http.post('/api/login', dadosLogin).subscribe({
