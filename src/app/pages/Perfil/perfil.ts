@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { UsuarioService, Usuario } from '../services/usuario.service';
+import { UsuarioService} from '../services/usuario.service';
 
 @Component({
   selector: 'app-perfil',
