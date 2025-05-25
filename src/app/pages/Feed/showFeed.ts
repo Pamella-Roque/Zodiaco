@@ -32,14 +32,11 @@ export class FeedComponent implements OnInit {
     if (storedNickname && storedToken) {
       this.nickname = storedNickname;
       this.token = storedToken;
-
-      // Sempre busque dados atualizados da API para evitar inconsistências
+   
       this.consultardadosUser();
 
-      // Buscar signo (caso queira atualizar separadamente)
       this.consultarSigno(this.nickname);
 
-      // Buscar frase do dia
       this.gerarFrasedoDia();
 
     } else {
@@ -68,7 +65,7 @@ export class FeedComponent implements OnInit {
           this.gerarHoroscopo(this.nickname);
         } else {
           this.planoBasico = 'Funcionalidade disponível apenas para o plano Avançado';
-          // Limpa dados avançados
+          // Limpa dados do plano avnçado
           this.animal = '';
           this.numero = '';
           this.resultado = { signo: '', data: '', texto: '' };

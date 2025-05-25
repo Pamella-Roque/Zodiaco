@@ -19,8 +19,6 @@ export class CreateAccountComponent {
   dataNascimento = '';
   codigoPix: string = '';
 
- 
-
   constructor(private http: HttpClient, private router: Router) {}
 
   gerarCodigoPix() {
@@ -41,7 +39,6 @@ export class CreateAccountComponent {
       }
     });
   }    
-
 
   cadastrar() {
     if (!this.nickname || !this.nome || !this.email || !this.senha || !this.plano || !this.dataNascimento) {

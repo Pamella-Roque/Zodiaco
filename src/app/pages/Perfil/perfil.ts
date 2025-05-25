@@ -18,6 +18,7 @@ export class PerfilComponent implements OnInit {
   plano = '';
   nascimento = '';
   senha = '';
+  nickname = '';
 
   constructor(
     private http: HttpClient,
@@ -47,7 +48,8 @@ export class PerfilComponent implements OnInit {
         this.nome = res.nome || '';
         this.email = res.email || '';
         this.plano = res.plano || '';
-        this.nascimento = res.nascimento ? res.nascimento.substring(0, 10) : ''; // corta o timestamp para ficar só data
+        this.nickname = res.nickname;
+        this.nascimento = res.nascimento ? res.nascimento.substring(0, 10) : ''; 
     console.log('Dados perfil:', res);
       },
       error: (err) => {
@@ -58,7 +60,6 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-
 
   atualizarUsuario() {
     const token = this.authService.getToken();
@@ -87,7 +88,7 @@ export class PerfilComponent implements OnInit {
       next: () => {
         alert('Dados atualizados com sucesso! Por segurança, realize o login novamente para atualizar suas permissões.');
   
-        // Força logout após atualização de dados sensíveis
+        // Força logout após atualização de dados
         this.authService.logout();
         this.usuarioService.limparUsuario();
         this.router.navigate(['/login']);
@@ -99,12 +100,6 @@ export class PerfilComponent implements OnInit {
     });
   }
   
-
-
-
-
-
-
   excluirConta() {
     const token = this.authService.getToken();
     const nickname = this.authService.getNickname();
